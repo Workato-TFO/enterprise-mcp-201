@@ -33,6 +33,7 @@ const LAB3_QUESTIONS = [
   "wrong_tool",
   "bypass",
   "on_behalf",
+  "learner_chosen",
 ];
 
 function sameList(actual, expected) {
@@ -126,7 +127,12 @@ function lab3Issues(spec, html, workbookHtml) {
     issues.push("Task 4.2 placement");
   }
   if (!sameList(actualQuestions, LAB3_QUESTIONS)) {
-    issues.push("five matched comparison rows");
+    issues.push("six matched comparison rows");
+  }
+  const learnerChosen = spec.questions?.find(({ id }) => id === "learner_chosen");
+  if (!learnerChosen?.setup?.includes("Reuse your Lab 1 prompt") ||
+      !learnerChosen?.watch?.includes("prompt you chose in Lab 1 unchanged")) {
+    issues.push("learner-authored prompt carry-forward");
   }
   if (!html.includes("measurement-comparison-matrix")) {
     issues.push("published comparison matrix");
@@ -181,13 +187,13 @@ passed = report("Lab 1 known-bad self-check", [
 
 const badLab3 = clone(lab3.spec);
 badLab3.comparison_layout = "tabs";
-badLab3.questions.push(clone(lab1.spec.questions.at(-1)));
+badLab3.questions = badLab3.questions.slice(0, 5);
 badLab3.tasks[0].position = "before_walkthrough";
 const caughtLab3 = lab3Issues(badLab3, lab3.html, lab3.workbookHtml);
 passed = report("Lab 3 known-bad self-check", [
   "comparison matrix mode",
   "Task 4.2 placement",
-  "five matched comparison rows",
+  "six matched comparison rows",
 ].every((issue) => caughtLab3.includes(issue)) ? [] : ["guard did not catch regression"]) && passed;
 
 if (!passed) {
