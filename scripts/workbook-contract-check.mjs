@@ -116,6 +116,9 @@ function lab3Issues(spec, html, workbookHtml) {
   if (spec.mode !== "comparison" || spec.comparison_layout !== "matrix") {
     issues.push("comparison matrix mode");
   }
+  if (spec.surface !== "workspace") {
+    issues.push("workspace surface mode");
+  }
   if (spec.baseline_column_label !== "Fragmented" ||
       spec.compare_column_label !== "Process") {
     issues.push("comparison labels");
@@ -136,6 +139,10 @@ function lab3Issues(spec, html, workbookHtml) {
   }
   if (!html.includes("measurement-comparison-matrix")) {
     issues.push("published comparison matrix");
+  }
+  if (!workbookHtml.includes("measurement-workbook--workspace") ||
+      !html.includes(".measurement-workbook--workspace{")) {
+    issues.push("published workspace frame");
   }
   if (!html.includes(".measurement-workbook-viewport{overflow:visible;}")) {
     issues.push("non-scrolling workbook viewport");
@@ -187,11 +194,13 @@ passed = report("Lab 1 known-bad self-check", [
 
 const badLab3 = clone(lab3.spec);
 badLab3.comparison_layout = "tabs";
+delete badLab3.surface;
 badLab3.questions = badLab3.questions.slice(0, 5);
 badLab3.tasks[0].position = "before_walkthrough";
 const caughtLab3 = lab3Issues(badLab3, lab3.html, lab3.workbookHtml);
 passed = report("Lab 3 known-bad self-check", [
   "comparison matrix mode",
+  "workspace surface mode",
   "Task 4.2 placement",
   "six matched comparison rows",
 ].every((issue) => caughtLab3.includes(issue)) ? [] : ["guard did not catch regression"]) && passed;
