@@ -26,9 +26,18 @@ elsewhere.
 Only pressed, self-contained HTML belongs in `labs/`. Do not edit HTML in place —
 re-press the vetted course bundle and replace the whole snapshot.
 
-Run `bash scripts/publish-checks.sh` before every push. Do not change the
-repository visibility or promote its Pages site without the course release gate
-being met.
+Run `bash scripts/publish-checks.sh` before every push. The command verifies both
+public-content hygiene and the learner-facing workbook contract in Labs 1 and 3.
+Do not change the repository visibility or promote its Pages site without the
+course release gate being met.
+
+Enable the tracked local pre-push hook once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The same checks run in GitHub Actions on every push and pull request.
 
 ## About the data
 

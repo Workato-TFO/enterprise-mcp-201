@@ -6,6 +6,8 @@ set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
+node scripts/workbook-contract-check.mjs
+
 fail=0
 
 scan() {
