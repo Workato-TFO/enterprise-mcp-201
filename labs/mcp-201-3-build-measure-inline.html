@@ -3893,7 +3893,8 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
             if (selected) selected.focus();
           });
         });
-        if (progressText) progressText.textContent = recorded + ' of ' + spec.questions.length + ' recorded';
+        if (progressText) progressText.textContent = (baseline ? '' : compareColumnLabel + ' · ')
+          + recorded + ' of ' + spec.questions.length + ' recorded';
         if (viewport) viewport.setAttribute('aria-labelledby', 'measurement-run-tab-' + rootIndex + '-' + active);
       }
       function selectQuestion(index, focusTab) {
