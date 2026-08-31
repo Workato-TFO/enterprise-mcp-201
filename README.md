@@ -12,7 +12,7 @@ Customer-facing lab guides for Enterprise MCP 201: Process MCP Principles.
 |---|---:|
 | Observe and diagnose | 30 minutes |
 | Redesign the tools | 35 minutes |
-| Build and measure | 70 minutes |
+| Complete the policy branch and measure | 70 minutes |
 
 The HTML files are self-contained pressed builds. Learner workbook data is stored
 locally by the browser; this repository does not collect submissions.

@@ -2335,14 +2335,15 @@ html.nav-collapsed .shell{grid-template-columns:1fr;}
    Amber, not red, for "not started" — an untouched question is a to-do, not an error. */
 .measurement-workbook{--mw-done:var(--ac-green-100,#235655);--mw-done-bg:var(--ac-teal-20,#E1FFFC);--mw-todo:#8A5200;--mw-todo-bg:#FFF6E5;}
 .measurement-workbook{margin:24px 0;max-width:var(--measure);border:1px solid var(--rule);border-radius:12px;background:var(--paper);overflow:hidden;}
-.measurement-workbook--task-panels{border:0;border-radius:0;background:transparent;overflow:visible;scroll-margin-top:12px;}
+.measurement-workbook--workspace{border:0;border-radius:0;background:transparent;overflow:visible;scroll-margin-top:12px;}
 .measurement-workbook-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:18px 20px 14px;border-bottom:1px solid var(--rule);background:var(--accent-soft);}
-.measurement-workbook--task-panels .measurement-workbook-head{border:1px solid var(--rule);border-radius:12px 12px 0 0;}
+.measurement-workbook--workspace .measurement-workbook-head{border:1px solid var(--rule);border-radius:12px 12px 0 0;}
 .measurement-workbook-label{font-family:var(--font-label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;}.measurement-workbook h4{margin:4px 0 0;font-family:var(--font-display);font-size:21px;font-weight:500;line-height:1.15;}.measurement-workbook-head p{margin:7px 0 0;color:var(--ink-2);}.measurement-save-state{font-family:var(--font-label);font-size:11px;letter-spacing:.04em;color:var(--muted);white-space:nowrap;}
 .measurement-workbook-status{display:flex;flex:none;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;}.measurement-progress{color:var(--ac-teal-ink);font-family:var(--font-label);font-size:12px;letter-spacing:.04em;white-space:nowrap;}
 .measurement-watch{margin:0;padding:9px 14px;border-left:3px solid var(--ac-teal-ink);background:color-mix(in srgb,var(--ac-teal-ink) 7%,transparent);color:var(--muted);font-family:var(--font-body);font-size:12.5px;line-height:1.45;}
 .measurement-question-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:7px;padding:14px 16px;border-bottom:1px solid var(--rule);}.measurement-question-tabs button{min-height:56px;padding:7px 8px;border:1px solid var(--rule);border-radius:7px;background:transparent;color:var(--ink);font-family:var(--font-label);font-size:11px;text-align:left;cursor:pointer;}.measurement-question-tabs button[aria-selected="true"]{border-color:var(--ac-teal-ink);box-shadow:inset 0 0 0 1px var(--ac-teal-ink);}.measurement-question-tabs small{display:block;margin-top:4px;color:var(--muted);font-family:var(--font-body);font-size:11px;line-height:1.2;}
-.measurement-workbook--task-panels .measurement-question-tabs{position:sticky;top:0;z-index:6;border-right:1px solid var(--rule);border-left:1px solid var(--rule);background:color-mix(in srgb,var(--paper) 96%,transparent);box-shadow:0 5px 14px color-mix(in srgb,var(--ink) 7%,transparent);backdrop-filter:blur(8px);}
+.measurement-workbook--workspace .measurement-question-tabs{border-right:1px solid var(--rule);border-left:1px solid var(--rule);background:color-mix(in srgb,var(--paper) 96%,transparent);}
+.measurement-workbook--task-panels .measurement-question-tabs{position:sticky;top:0;z-index:6;box-shadow:0 5px 14px color-mix(in srgb,var(--ink) 7%,transparent);backdrop-filter:blur(8px);}
 .measurement-question-tabs button:focus-visible{outline:3px solid color-mix(in srgb,var(--ac-teal-ink) 35%,transparent);outline-offset:2px;}
 /* Per-question completion state. The status text already says the same thing, so
    the tint and glyph are a scanning aid rather than the only signal. */
@@ -2357,7 +2358,7 @@ html.nav-collapsed .shell{grid-template-columns:1fr;}
 .measurement-question-tabs button[data-state="partial"] small::before{content:'◐  ';}
 .measurement-question-tabs button[data-state="empty"] small::before{content:'○  ';}
 .measurement-workbook-viewport{overflow:visible;}
-.measurement-workbook-viewport[data-measurement-task-panels]{border-style:solid;border-width:0 1px 1px;border-color:var(--rule);border-radius:0 0 12px 12px;background:var(--paper);overflow:visible;}
+.measurement-workbook--workspace .measurement-workbook-viewport{border-style:solid;border-width:0 1px 1px;border-color:var(--rule);border-radius:0 0 12px 12px;background:var(--paper);overflow:visible;}
 .measurement-task-deck{position:relative;margin-top:34px;padding:0 0 0 18px;border-left:2px solid color-mix(in srgb,var(--ac-teal-ink) 38%,var(--rule));}
 .measurement-task-deck::before{position:absolute;top:-34px;left:-2px;height:34px;border-left:2px solid color-mix(in srgb,var(--ac-teal-ink) 38%,var(--rule));content:'';}
 .measurement-task-panel[hidden]{display:none;}
@@ -3892,7 +3893,8 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
             if (selected) selected.focus();
           });
         });
-        if (progressText) progressText.textContent = recorded + ' of ' + spec.questions.length + ' recorded';
+        if (progressText) progressText.textContent = (baseline ? '' : compareColumnLabel + ' · ')
+          + recorded + ' of ' + spec.questions.length + ' recorded';
         if (viewport) viewport.setAttribute('aria-labelledby', 'measurement-run-tab-' + rootIndex + '-' + active);
       }
       function selectQuestion(index, focusTab) {
@@ -3968,7 +3970,12 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
           });
           recordBody.appendChild(form);
         } else if (spec.comparison_layout === 'matrix') {
-          var MATRIX_FIELDS = ['completionSeconds', 'toolCalls', 'contextPercent'];
+          // A comparison may intentionally use only a subset of the numeric
+          // readings captured by its baseline lab. Keep the historic three-row
+          // default when `fields` is omitted, but respect an explicit selector.
+          var MATRIX_FIELDS = WORKBOOK_DELTA_FIELDS.filter(function (name) {
+            return fieldOrder.indexOf(name) !== -1;
+          });
           var labels = { completionSeconds: 'Completion time', toolCalls: 'Tool calls', contextPercent: 'Context used' };
           var units = { completionSeconds: ' s', toolCalls: '', contextPercent: '%' };
           var matrixDeltas = {};
@@ -4043,7 +4050,12 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
             var f = WORKBOOK_FIELDS[name];
             recordBody.appendChild(workbookEntryField(WORKBOOK_COMPARISON_LABELS[name] || f.label, name, enhanced[name], function (v) { enhanced[name] = v; }, f.cls));
           });
-          aggregate = comparisonAggregate(); recordBody.appendChild(aggregate);
+          // Heterogeneous instructional cases should be reported per paired row,
+          // not pooled into an overall statistic. Courses opt out explicitly;
+          // existing workbooks retain the aggregate by default.
+          if (String(spec.aggregate_summary) !== 'false') {
+            aggregate = comparisonAggregate(); recordBody.appendChild(aggregate);
+          }
         } else {
           var columns = document.createElement('div'); columns.className = 'measurement-columns';
           var deltaBoxes = null;
@@ -4277,7 +4289,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       <section class="introduction introduction-comic" aria-label="The situation">
         <div class="introduction-label">Introduction</div>
         <div class="comic-strip"></div>
-        <p class="situation-framing">In this lab, you'll act as integration engineer for IDEA Brands — turning the fragmented expense operations you diagnosed in Lab 1 into a single atomic submission contract. This is a design lab: you write the contract by hand on your lab handout here, and implement exactly that in Lab 3. The IDEA Brands expense data is synthetic.</p>
+        <p class="situation-framing">In this lab, you'll act as integration engineer for IDEA Brands — turning the fragmented expense operations you diagnosed in Lab 1 into a single atomic submission contract. This is the course's main design task: you write the full contract by hand, then carry its four-component description and policy-enforcement slice into the supplied Lab 3 skeleton. The expense data is synthetic.</p>
         
       <aside class="persona-card">
         <div class="persona-avatar"><span>NA</span></div>
@@ -4340,11 +4352,11 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
           <h3 class="task-title">Pick the failure you are designing against</h3>
         </header>
         <div class="task-body">
-          <p class="task-hook">Your Lab 1 handout has six runs on its mapping grid, and at least one of them records a prerequisite the model was free to skip. That run is the reason this lab exists. Everything you design in the next half hour is an answer to something you watched go wrong.</p>
+          <p class="task-hook">Your Lab 1 handout has three numbered prompts plus one you chose, and at least one records a prerequisite the model was free to skip. That evidence is the reason this lab exists. Everything you design in the next half hour answers something you observed.</p>
           
       <section class="task-walkthrough">
         <div class="walkthrough-label">Overview</div>
-        <div class="walkthrough-body"><p>You end with section 0 of your handout complete: one specific Lab 1 run chosen as your design target, its prerequisite written in a form that could move into recipe logic, and <code>get_expense_report_status</code> identified as the tool that stays separate. Pick a run where the sequence broke, not one that happened to work.</p></div>
+        <div class="walkthrough-body"><p>You end with section 0 of your handout complete: one specific Lab 1 finding chosen as your design target, its prerequisite written in a form that could move into recipe logic, and <code>get_expense_report_status</code> identified as the tool that stays separate. A correct observed run can still expose a model-controlled prerequisite, so use the guarantee column rather than searching only for visible failure.</p></div>
       </section>
     
           
@@ -4362,7 +4374,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="1.1">
         <label class="step-toggle"><span class="step-num">1.1.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Open your Lab 1 handout and read the mapping grid together with your answers to questions 1 through 6.</span>
+        <span class="step-body">Open your Lab 1 handout and read prompts 1–3, your chosen prompt, and the seven-tool structural diagnosis.</span>
       </li>
       <li class="step" data-task="1.1">
         <label class="step-toggle"><span class="step-num">1.1.2</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4537,7 +4549,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
               <span class="do-it-meta" aria-hidden="true">5 steps</span>
             </summary>
             <div class="do-it-inner">
-      <p class="task-intent">This description is the entire basis on which a model chooses your tool over six others. It is read at selection time, before any call happens, so anything it fails to say is a routing decision left to inference.</p>
+      <p class="task-intent">This description is the basis on which a model chooses the submission tool instead of the adjacent status tool. It is read before any call happens, so anything it fails to say becomes a routing decision left to inference.</p>
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="2.2">
         <label class="step-toggle"><span class="step-num">2.2.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4583,7 +4595,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
           
           
           <div class="config-card"><div class="card-label">Apply these values</div><div class="table-wrap"><table><thead><tr><th>Outcome</th><th>Required information</th></tr></thead><tbody><tr><td><code>filed</code></td><td>Report ID, status, next step</td></tr><tr><td><code>filed_pending_approval</code></td><td>Report ID, who must approve, why</td></tr><tr><td><code>rejected_policy</code></td><td>Violated rule, observed value, allowed value, corrective action, whether a report was created</td></tr><tr><td><code>rejected_budget</code></td><td>Invalid or disallowed code, and corrective action</td></tr><tr><td><code>rejected_category</code></td><td>What was supplied, and what the application accepts</td></tr><tr><td><code>rejected_ineligible</code></td><td>Why the filer cannot file</td></tr><tr><td><code>error_upstream</code></td><td>Failure stage, safe retry guidance, honest statement of report state</td></tr></tbody></table></div>
-<aside class="co co-warn" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="currentColor" stroke="none" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /></svg><div><p class="co-label">Heads up</p><div class="co-body"><p>Keep these seven outcome strings exactly as written. You implement and test them in Lab 3, and the test cases match on the literal string.</p></div></div></aside></div>
+<aside class="co co-warn" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="currentColor" stroke="none" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /></svg><div><p class="co-label">Heads up</p><div class="co-body"><p>Keep these seven outcome strings exactly as written. The supplied Lab 3 skeleton carries the complete reference contract, and your policy branch must return the literal <code>rejected_policy</code> value.</p></div></div></aside></div>
           
           
           <details class="task-do-it steps-block">
@@ -4592,7 +4604,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
               <span class="do-it-meta" aria-hidden="true">4 steps</span>
             </summary>
             <div class="do-it-inner">
-      <p class="task-intent">The outcome vocabulary is the tool's half of the conversation. You are deciding here what a caller is able to learn from a failure, and in Lab 3 you will implement each of these strings exactly as written.</p>
+      <p class="task-intent">The outcome vocabulary is the tool's half of the conversation. You are deciding what a caller can learn from each terminal state. The Lab 3 skeleton supplies the complete vocabulary; you implement its <code>rejected_policy</code> slice.</p>
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="2.3">
         <label class="step-toggle"><span class="step-num">2.3.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4640,7 +4652,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
           
       <section class="task-walkthrough">
         <div class="walkthrough-label">Overview</div>
-        <div class="walkthrough-body"><p>You end with question 6 on your handout holding a prediction for each of five requests, written against section C, and at least one description revised because its prediction was ambiguous. Two of the five should select <code>submit_expense_report</code>, one should select <code>get_expense_report_status</code>, and one should select neither. If you cannot confidently say which, the model cannot either.</p></div>
+        <div class="walkthrough-body"><p>You end with question 6 on your handout holding a prediction for each of five requests, written against section C, and at least one description revised when its prediction was ambiguous. Three submission requests should select <code>submit_expense_report</code>, the status-only request should select <code>get_expense_report_status</code>, and the out-of-domain request should select neither.</p></div>
       </section>
     
           
@@ -4658,11 +4670,11 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">On question 6 of your handout, take Lab 1's <strong>Valid</strong> run — the $245 lodging expense — and predict which tool your contract selects.</span>
+        <span class="step-body">On question 6 of your handout, take prompt 1 — the valid $245 lodging expense — and predict which tool your contract selects.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.2</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Take Lab 1's <strong>Wrong tool</strong> run, which asks for a status using the write tool by name, and predict which tool your contract selects. This is the hardest of the five: the request is a read, and the caller has named a write.</span>
+        <span class="step-body">Use the status-only request: <code>What is the current status of the expense report you just created for me? Do not submit anything new.</code> Predict which tool your contract selects.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.3</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4670,11 +4682,11 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.4</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Take Lab 1's <strong>Over limit</strong> run, the $347 hotel, and predict the selected tool and which validation stays internal.</span>
+        <span class="step-body">Take prompt 2, the ordinary over-limit $347 hotel request, and predict the selected tool and which validation stays internal.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.5</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Take Lab 1's <strong>On behalf</strong> run, filing for the CEO, and predict the outcome — then ask whether your contract changes it at all.</span>
+        <span class="step-body">Use the CEO/on-behalf request — filing a $180 lodging expense for Mira Solano — and predict the outcome, then ask whether your contract changes it at all.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.6</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4740,7 +4752,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
 <ul><li>Your contract removed inputs that asked the model to supply information it could not know. Where else in an integration estate does a caller get asked for a value only the system can determine?</li><li>The department failure happened because two tools ran in parallel and nothing enforced that one's output was the other's input. What does that suggest about which prerequisites can safely stay as separate tools, and which cannot?</li><li>Every rejection outcome you defined states whether a report was created. What would a caller reasonably do differently based on that one sentence, and what happens if it is missing?</li><li>Filing for the CEO stayed possible under your contract. If authorisation cannot live in the tool, where in the architecture does it belong, and who owns it?</li></ul></section>
 <section id="wrap-up" class="closer-mystery"><h2>Wrap-up</h2><p>Noor's hotel expense now has one command behind it that either files the report or explains, in business terms, why it did not — and says whether anything was written either way.</p>
 <ul><li><strong>Atomic business intent.</strong> Organize a process tool around the job someone is trying to finish, and its prerequisite list stops being a design argument.</li><li><strong>Composition is not consolidation.</strong> Absorb the prerequisites of one intent; keep independently useful operations as their own tools with an explicit redirect.</li><li><strong>Determinism over cleverness.</strong> A prerequisite the model may skip is a prerequisite that will be skipped. Move the ordering into recipe logic where it cannot be reasoned around.</li><li><strong>Semantic outcomes.</strong> Say what happened, whether anything was written, and what to do next. A status code makes the caller guess.</li></ul>
-<p>Bring the handout to Lab 3. Section C gets pasted into the tool's description and section D's seven strings get implemented literally, so what you wrote is what you build.</p></section></section>
+<p>Bring the handout to Lab 3. You paste section C into the supplied skeleton. Its complete semantic scaffold preserves section D, while the policy branch you add must return <code>rejected_policy</code> exactly as designed here.</p></section></section>
     </main>
 </div>
 
