@@ -4336,7 +4336,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
         </div>
         <div class="pre-block">
           <h4>What you'll need</h4>
-          <ul><li>Your completed Lab 2 design-contract handout</li><li>Your Lab 1 measurement workbook in the same browser</li><li>Your printed Lab 3 handout</li><li>Your isolated learner project [ENV-DEP: isolated learner project]</li><li>A separate Lab 3 Process skeleton project and server [ENV-DEP: Lab 3 Process skeleton project and server]</li><li>Access to your Workato logs or job history [ENV-DEP: learner-readable logs/job history]</li><li>Access to the independent expense-report list [ENV-DEP: learner-visible expense-report ledger]</li><li>Read access to the complete shared reference project [ENV-DEP: shared Lab 3 reference-solution project]</li></ul>
+          <ul><li>Your completed Lab 2 design-contract handout</li><li>Your Lab 1 measurement workbook in the same browser</li><li>Your printed Lab 3 handout</li><li>Your isolated learner project</li><li>A separate Lab 3 Process skeleton project and server</li><li>Access to your Workato logs or job history</li><li>Access to the independent expense-report list</li><li>Read access to the complete shared reference project</li></ul>
         </div>
       </div>
     
@@ -4369,7 +4369,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
           
       <section class="task-walkthrough">
         <div class="walkthrough-label">Overview</div>
-        <div class="walkthrough-body"><p>You end with the separate Process project, skeleton, editable policy region, independent ledger, and recovery reference all located. The exact path is still awaiting a first-time-user walk-through [ENV-DEP: validated Workato UI path].</p></div>
+        <div class="walkthrough-body"><p>You end with the separate Process project, its skeleton, the region of it you may edit, the expense-report list, and the reference copy you can restore from all located. Everything you build in this lab happens inside that one project, and the reference copy is there if you need to start a section over.</p></div>
       </section>
     
           
@@ -4387,7 +4387,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="1.1">
         <label class="step-toggle"><span class="step-num">1.1.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Open your separately provisioned Lab 3 Process project and server [ENV-DEP: Lab 3 Process skeleton project and server].</span>
+        <span class="step-body">Open your separately provisioned Lab 3 Process project and server.</span>
       </li>
       <li class="step" data-task="1.1">
         <label class="step-toggle"><span class="step-num">1.1.2</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4453,7 +4453,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       <div class="steps-inner"><ul class="steps">
       <li class="step" data-task="1.2">
         <label class="step-toggle"><span class="step-num">1.2.1</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Open section C on your Lab 2 handout.</span>
+        <span class="step-body">Open table 5 on your Lab 2 worksheet.</span>
       </li>
       <li class="step" data-task="1.2">
         <label class="step-toggle"><span class="step-num">1.2.2</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4631,7 +4631,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </section>
     
           
-          <aside class="co co-note" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg><div><p class="co-label">Note</p><div class="co-body"><p><strong>Some supplied outcomes are reference-only today</strong></p><p>The skeleton retains <code>rejected_ineligible</code>, <code>filed_pending_approval</code>, and <code>error_upstream</code>, but your scored slice is <code>rejected_policy</code>. Employment-status evidence remains unavailable until the fixture set exists [ENV-DEP: employment-status fixture set].</p></div></div></aside>
+          <aside class="co co-note" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg><div><p class="co-label">Note</p><div class="co-body"><p><strong>Some supplied outcomes are reference-only today</strong></p><p>The skeleton already handles <code>rejected_ineligible</code>, <code>filed_pending_approval</code>, and <code>error_upstream</code>. The branch you write is <code>rejected_policy</code>, and that is the only one you are scored on.</p></div></div></aside>
           
           
           
@@ -4657,7 +4657,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.4</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Return to the Process MCP server and confirm <code>submit_expense_report</code> plus <code>get_expense_report_status</code> are exposed [ENV-DEP: get_expense_report_status in learner env].</span>
+        <span class="step-body">Return to the Process MCP server and confirm <code>submit_expense_report</code> plus <code>get_expense_report_status</code> are exposed.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.5</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4665,7 +4665,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.6</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">In LibreChat, open a fresh conversation using the supplied Process connection and select only that server [ENV-DEP: LibreChat MCP connection form].</span>
+        <span class="step-body">In LibreChat, open a fresh conversation using the supplied Process connection and select only that server.</span>
       </li>
       <li class="step" data-task="3.1">
         <label class="step-toggle"><span class="step-num">3.1.7</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4690,7 +4690,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
             <div class="phase-num">Phase 4</div>
             <h2 class="phase-name">Prove and compare</h2>
             <p class="phase-question">In this phase, you'll run the three fixed prompts and complete a correctness-first paired record.</p>
-            <aside class="co co-key" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5" /><path d="m21 2-9.6 9.6" /><path d="m15.5 7.5 3 3L22 7l-3-3" /></svg><div><p class="co-label">Pattern</p><div class="co-body"><p><strong>Controlled paired evidence</strong></p><p>Match model, client, fixtures, wording, and fresh-conversation state. Report every row separately; these different paths are not a statistical sample.</p></div></div></aside>
+            <aside class="co co-key" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5" /><path d="m21 2-9.6 9.6" /><path d="m15.5 7.5 3 3L22 7l-3-3" /></svg><div><p class="co-label">Pattern</p><div class="co-body"><p><strong>Controlled paired evidence</strong></p><p>Use the same model, the same client, the same wording, and a fresh conversation each time. Report each row on its own — three runs are not a sample you can average.</p></div></div></aside>
           </header>
           
           
@@ -4727,7 +4727,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </div>
       
     </section>
-          <aside class="co co-warn" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="currentColor" stroke="none" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /></svg><div><p class="co-label">Heads up</p><div class="co-body"><p><strong>The response is a claim; the ledger is evidence</strong></p><p>Mark a row correct only when the semantic outcome and independent report state both match. If the ledger cannot be reached, stop outcome verification [ENV-DEP: learner-visible expense-report ledger].</p></div></div></aside>
+          <aside class="co co-warn" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="currentColor" stroke="none" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /></svg><div><p class="co-label">Heads up</p><div class="co-body"><p><strong>The response is a claim; the ledger is evidence</strong></p><p>Mark a row correct only when the semantic outcome and independent report state both match. If the ledger cannot be reached, stop outcome verification.</p></div></div></aside>
           
           
           
@@ -4749,7 +4749,7 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
       </li>
       <li class="step" data-task="4.1">
         <label class="step-toggle"><span class="step-num">4.1.3</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
-        <span class="step-body">Record completion time, client-visible MCP tool calls, and the business-outcome result; capture the matching Workato job evidence [ENV-DEP: learner-readable logs/job history].</span>
+        <span class="step-body">Record completion time, client-visible MCP tool calls, and the business-outcome result; capture the matching Workato job evidence.</span>
       </li>
       <li class="step" data-task="4.1">
         <label class="step-toggle"><span class="step-num">4.1.4</span><input type="checkbox" class="step-check" aria-label="Mark step complete"></label>
@@ -4833,12 +4833,12 @@ details.reveal > .reveal-body > :first-child { margin-top: 12px; }
         </section>
       
       </section>
-      <section class="closer"><section id="if-you-get-stuck" class="closer-generic"><h2>If you get stuck</h2><ul><li><strong>The separate skeleton is missing.</strong> Do not begin the walk-through [ENV-DEP: Lab 3 Process skeleton project and server].</li><li><strong>You edited supplied logic outside the two permitted locations.</strong> Restore from the complete shared reference project, then restart from the skeleton [ENV-DEP: shared Lab 3 reference-solution project].</li><li><strong>A rejection still creates a report.</strong> Stop testing and inspect the explicit Stop after your Return response.</li><li><strong>A connector action or field differs from the guide.</strong> Mark the exact step and UI label for routing; do not guess [ENV-DEP: validated Workato UI path].</li><li><strong>Both servers are attached.</strong> Detach one and rerun that prompt in a fresh conversation.</li><li><strong>The environment needs cleanup.</strong> Use only the event procedure; do not improvise deletion [ENV-DEP: documented reset procedure].</li></ul></section>
+      <section class="closer"><section id="if-you-get-stuck" class="closer-generic"><h2>If you get stuck</h2><ul><li><strong>The separate skeleton is missing.</strong> Do not begin the walk-through.</li><li><strong>You edited supplied logic outside the two permitted locations.</strong> Restore from the complete shared reference project, then restart from the skeleton.</li><li><strong>A rejection still creates a report.</strong> Stop testing and inspect the explicit Stop after your Return response.</li><li><strong>A connector action or field differs from the guide.</strong> Write down the step number and the label you actually see, then ask — do not guess.</li><li><strong>Both servers are attached.</strong> Detach one and rerun that prompt in a fresh conversation.</li><li><strong>The environment needs cleanup.</strong> Use only the event procedure; do not improvise deletion.</li></ul></section>
 <section id="reflect" class="closer-reflect"><h2>Reflect</h2><p>Now that one branch has been tested against a valid request and two policy violations, consider what the evidence can and cannot establish.</p>
 <ul><li>Which evidence showed that a rejection stopped the write rather than only describing one?</li><li>Why does prompt 1 have to pass before the two rejection results mean anything?</li><li>What control is still missing when someone asks to file for the CEO, and why did composition not add it?</li><li>Which part of the design belongs in the tool description, and which belongs in deterministic recipe logic?</li></ul></section>
 <section id="wrap-up" class="closer-mystery"><h2>Wrap-up</h2><p>Noor's valid expense filed, while both policy-sensitive requests were stopped before report creation—provided every required ledger check passed.</p>
 <ul><li><strong>Atomic intent.</strong> Submission owns its required sequence; status remains separate.</li><li><strong>Pre-write policy.</strong> The employee lookup supplies the department and the rejection path stops before the write.</li><li><strong>Semantic outcome.</strong> <code>rejected_policy</code> says what rule failed, what values were compared, and what to do next.</li><li><strong>Correctness before efficiency.</strong> Each paired row reports the business result before calls and time, with no pooled claim.</li></ul>
-<p>Keep the project unchanged for the debrief. During internal testing, record setup and lab duration separately; the 70-minute value remains an estimate until a first-time run is timestamped.</p></section></section>
+<p>Keep the project unchanged for the debrief.</p></section></section>
     </main>
 </div>
 
