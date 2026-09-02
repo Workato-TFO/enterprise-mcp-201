@@ -31,10 +31,14 @@ const LAB1_QUESTIONS = [
   ["learner_chosen", "2.4"],
 ];
 
+// Lab 3's comparison mirrors Lab 1 tab for tab. The fourth row is the learner's
+// own wording, replayed from browser storage against the redesigned server, so
+// it is compared but never scored — only the first three have required outcomes.
 const LAB3_QUESTIONS = [
   "valid",
   "over_limit",
   "bypass",
+  "learner_chosen",
 ];
 
 const LAB1_LABELS = [
@@ -44,7 +48,7 @@ const LAB1_LABELS = [
   "Your prompt",
 ];
 
-const LAB3_LABELS = LAB1_LABELS.slice(0, 3);
+const LAB3_LABELS = LAB1_LABELS;
 
 const FIXED_WORDING = {
   valid: "Submit a $245.00 lodging expense for employee EMP-0005 for the Portland client visit on 4 August. The hotel was the IDEA City Hotel.",
@@ -166,7 +170,7 @@ function lab3Issues(spec, html, workbookHtml) {
     issues.push("Task 4.1 placement");
   }
   if (!sameList(actualQuestions, LAB3_QUESTIONS)) {
-    issues.push("three fixed paired rows");
+    issues.push("comparison mirrors Lab 1 tab for tab");
   }
   if (!sameList(spec.questions?.map(({ label }) => label), LAB3_LABELS)) {
     issues.push("sequential comparison labels");
@@ -249,7 +253,7 @@ passed = report("Lab 3 known-bad self-check", [
   "workspace surface mode",
   "paired-only reporting without aggregate",
   "Task 4.1 placement",
-  "three fixed paired rows",
+  "comparison mirrors Lab 1 tab for tab",
   "sequential comparison labels",
 ].every((issue) => caughtLab3.includes(issue)) ? [] : ["guard did not catch regression"]) && passed;
 
