@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Enterprise Process MCP has moved</title>
+<link rel="canonical" href="https://workato-tfo.github.io/enterprise-mcp-process/">
+<meta http-equiv="refresh" content="0; url=https://workato-tfo.github.io/enterprise-mcp-process/">
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --muted:#5a5a5a; --link:#0b5cad; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131313; --fg:#ededed; --muted:#a6a6a6; --link:#6db3f2; }
+  }
+  body { background:var(--bg); color:var(--fg); margin:0; padding:3rem 1rem;
+         font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+  main { max-width:34rem; margin:0 auto; }
+  h1 { font-size:1.3rem; margin:0 0 .75rem; }
+  p { margin:0 0 1rem; color:var(--muted); }
+  a { color:var(--link); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Enterprise Process MCP has moved</h1>
+  <p>These lab guides are now published at a new address. You should be redirected automatically.</p>
+  <p><a id="go" href="https://workato-tfo.github.io/enterprise-mcp-process/">Continue to the lab guides</a></p>
+</main>
+<script>
+  (function () {
+    var OLD = "/enterprise-mcp-201", NEW = "/enterprise-mcp-process";
+    var rest = window.location.pathname.indexOf(OLD) === 0
+      ? window.location.pathname.slice(OLD.length) : "/";
+    var target = NEW + (rest || "/") + window.location.search + window.location.hash;
+    document.getElementById("go").setAttribute("href", target);
+    window.location.replace(target);
+  })();
+</script>
+</body>
+</html>
